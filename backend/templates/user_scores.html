@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Quiz Scores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>My Quiz Scores</h1>
+    </nav>
+
+    <div class="container">
+        <h2>Your Past Scores</h2>
+        <table class="score-table">
+            <thead>
+                <tr>
+                    <th>Quiz Title</th>
+                    <th>Score</th>
+                    <th>Date Taken</th>
+                </tr>
+            </thead>
+            <tbody id="score-list">
+                <!-- Scores will be inserted here -->
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('quiz_dashboard') }}"><button>Back to Dashboard</button></a>
+    </div>
+
+    <script>
+        function fetchUserScores() {
+            fetch('/api/user_scores')
+            .then(response => response.json())
+            .then(data => {
+                let scoreList = document.getElementById("score-list");
+                scoreList.innerHTML = "";
+
+                if (data.length === 0) {
+                    scoreList.innerHTML = "<tr><td colspan='3'>No scores available.</td></tr>";
+                    return;
+                }
+
+                data.forEach(score => {
+                    let row = `
+                        <tr>
+                            <td>${score.quiz_name}</td>
+                            <td>${score.score}/10</td>
+                            <td>${score.date_taken}</td>
+                        </tr>
+                    `;
+                    scoreList.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching scores:", error);
+                alert("Failed to load scores.");
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchUserScores);
+    </script>
+</body>
+</html>

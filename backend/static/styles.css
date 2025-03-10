@@ -1,0 +1,513 @@
+/* ✅ General Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* ✅ Navbar - Sleek & Modern */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Main Container - Better Spacing */
+.container {
+    margin: 50px auto;
+    width: 80%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    font-size: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* ✅ Animated Hover Effect */
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* ✅ Login & Register Box */
+.login-box, .register-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* ✅ Input Fields */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border 0.3s ease-in-out;
+}
+
+/* ✅ Input Focus Effect */
+input:focus {
+    border: 2px solid #007bff;
+    outline: none;
+}
+
+/* ✅ Buttons - Modern Look */
+button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 20px;
+    border: none;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* ✅ Button Hover Effect */
+button:hover {
+    background: linear-gradient(45deg, #0056b3, #003c82);
+    transform: scale(1.05);
+}
+
+/* ✅ Wrapper for Dashboard */
+.dashboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+/* ✅ Main Dashboard Box */
+.main-dashboard-box {
+    width: 60%;
+    padding: 40px;
+    text-align: center;
+    border-radius: 15px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(45deg, #ff9800, #e65100);
+}
+
+/* ✅ Hover Effects */
+.main-dashboard-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Smaller Dashboard Containers */
+.sub-dashboard-container {
+    display: flex;
+    gap: 20px;
+    width: 60%;
+    justify-content: space-between;
+}
+
+.sub-dashboard-box {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ View Scores (Green) */
+.view-scores {
+    background: linear-gradient(45deg, #28a745, #1e7e34);
+}
+
+.view-scores:hover {
+    background: #1e7e34;
+}
+
+/* ✅ Logout (Red) */
+.logout {
+    background: linear-gradient(45deg, #dc3545, #a71d2a);
+}
+
+.logout:hover {
+    background: #a71d2a;
+}
+
+/* ✅ Icons Styling */
+.main-dashboard-box i, .sub-dashboard-box i {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+/* ✅ Quiz Page Styling */
+.quiz-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 80%;
+    max-width: 700px;
+    margin: 30px auto;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.quiz-container:hover {
+    transform: scale(1.02);
+}
+
+/* ✅ Question Box */
+.question-box {
+    background: linear-gradient(135deg, #f9f9f9, #e6e6e6);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: left;
+    font-size: 22px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.question-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* ✅ Quiz Options */
+.quiz-options button {
+    width: 100%;
+    padding: 14px;
+    margin: 8px 0;
+    font-size: 20px;
+    border-radius: 10px;
+    background: white;
+    color: #333;
+    border: 2px solid #007bff;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    font-weight: bold;
+}
+
+.quiz-options button:hover {
+    background: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+
+.quiz-options .selected {
+    background: #007bff;
+    color: white;
+    border: 2px solid #0056b3;
+}
+
+/* ✅ Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.nav-buttons button {
+    width: 48%;
+    padding: 14px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* ✅ Previous Button */
+#prev-btn {
+    background: linear-gradient(45deg, #ff9800, #e65100);
+    color: white;
+}
+
+#prev-btn:hover {
+    background: #e65100;
+    transform: scale(1.05);
+}
+
+/* ✅ Next Button */
+#next-btn {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+}
+
+#next-btn:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* ✅ Submit Button */
+#submit-btn {
+    background: linear-gradient(45deg, #28a745, #1e7e34);
+    color: white;
+}
+
+#submit-btn:hover {
+    background: #1e7e34;
+    transform: scale(1.05);
+}
+
+/* ✅ General Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* ✅ Navbar - Sleek & Modern */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Welcome User Container */
+.welcome-container {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 60%;
+    max-width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Quiz Container */
+.quiz-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 80%;
+    max-width: 700px;
+    margin: 30px auto;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.quiz-container:hover {
+    transform: scale(1.02);
+}
+
+/* ✅ Bottom Section: View Scores & Logout */
+.bottom-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 60%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.sub-dashboard-box {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* ✅ View Scores (Green) */
+.view-scores {
+    background: linear-gradient(45deg, #28a745, #1e7e34);
+    width: 45%;
+}
+
+.view-scores:hover {
+    background: #1e7e34;
+}
+
+/* ✅ Logout (Red) */
+.logout {
+    background: linear-gradient(45deg, #dc3545, #a71d2a);
+    width: 45%;
+}
+
+.logout:hover {
+    background: #a71d2a;
+}
+
+/* ✅ Score Table */
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.score-table th, .score-table td {
+    border: 2px solid #007bff;
+    padding: 12px;
+    text-align: center;
+}
+
+.score-table th {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    font-weight: bold;
+}
+
+.score-table tbody tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+.score-table tbody tr:hover {
+    background: #ddd;
+}
+
+
+/* ✅ Admin Dashboard Styling */
+.admin-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+    width: 80%;
+}
+
+.admin-box {
+    width: 30%;
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.admin-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Create Quiz Section */
+.quiz-section {
+    width: 50%;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hidden {
+    display: none;
+}
+
+/* ✅ Manage Quiz Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.delete-btn {
+    background-color: red;
+    color: white;
+}
+
+.edit-btn {
+    background-color: green;
+    color: white;
+}
+
+/* ✅ Table Styling - Enhanced */
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* ✅ Table Header - Modern Look */
+.score-table th {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* ✅ Table Rows - Proper Padding */
+.score-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 17px;
+    text-align: center;
+}
+
+/* ✅ Alternate Row Color for Better Readability */
+.score-table tr:nth-child(even) {
+    background: rgba(240, 240, 240, 0.95);
+}
+
+/* ✅ Hover Effect for Rows */
+.score-table tr:hover {
+    background: rgba(0, 123, 255, 0.2);
+    transform: scale(1.01);
+    transition: all 0.2s ease-in-out;
+}
+
+/* ✅ Table Borders */
+.score-table th, .score-table td {
+    border-left: 1px solid #ddd;
+}
+
+/* ✅ Remove Left Border for First Column */
+.score-table th:first-child, .score-table td:first-child {
+    border-left: none;
+}
+
+/* ✅ Responsive Adjustments */
+@media (max-width: 768px) {
+    .score-table {
+        font-size: 14px;
+    }
+
+    .score-table th, .score-table td {
+        padding: 10px;
+    }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <h1>Quiz Dashboard</h1>
+    </nav>
+
+    <!-- ✅ Welcome Container -->
+    <div class="welcome-container">
+        <h2>Welcome, {{ session['username'] }}</h2>
+    </div>
+
+    <!-- ✅ Quiz Selection Container -->
+    <div class="quiz-container">
+        <h3>Select a Quiz</h3>
+        <ul id="quiz-list"></ul>
+    </div>
+
+    <!-- ✅ Bottom Section: View Scores & Logout -->
+    <div class="bottom-container">
+        <div class="sub-dashboard-box view-scores" onclick="window.location.href='/user_scores'">
+            <i class="fas fa-chart-line"></i>
+            <h3>View Scores</h3>
+        </div>
+        <div class="sub-dashboard-box logout" onclick="window.location.href='/logout'">
+            <i class="fas fa-sign-out-alt"></i>
+            <h3>Logout</h3>
+        </div>
+    </div>
+
+    <script>
+        function fetchQuizzes() {
+            fetch('/api/quizzes')
+                .then(response => response.json())
+                .then(data => {
+                    let quizList = document.getElementById("quiz-list");
+                    quizList.innerHTML = "";
+
+                    if (data.length === 0) {
+                        quizList.innerHTML = "<p>No quizzes available.</p>";
+                        return;
+                    }
+
+                    data.forEach(quiz => {
+                        let li = document.createElement("li");
+                        li.innerHTML = `
+                            <button class="quiz-btn" onclick="startQuiz(${quiz.id})">
+                                ${quiz.title}
+                            </button>`;
+                        quizList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching quizzes:", error);
+                    alert("Failed to load quizzes.");
+                });
+        }
+
+        function startQuiz(quizId) {
+            window.location.href = `/take_quiz/${quizId}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchQuizzes);
+    </script>
+</body>
+
+</html>

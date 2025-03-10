@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Questions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Add Questions to Quiz</h1>
+    </nav>
+
+    <div class="container">
+        <h2>Quiz ID: {{ quiz_id }}</h2>
+        <div id="questions-container"></div>
+        <button onclick="submitQuestions({{ quiz_id }})">Submit Questions</button>
+    </div>
+
+    <script>
+        function generateQuestionFields() {
+            let container = document.getElementById("questions-container");
+            container.innerHTML = "";
+            for (let i = 1; i <= 10; i++) {
+                container.innerHTML += `
+                    <div class="question-box">
+                        <p><b>Question ${i}</b></p>
+                        <input type="text" id="q${i}-text" placeholder="Enter Question">
+                        <input type="text" id="q${i}-option1" placeholder="Option 1">
+                        <input type="text" id="q${i}-option2" placeholder="Option 2">
+                        <input type="text" id="q${i}-option3" placeholder="Option 3">
+                        <input type="text" id="q${i}-option4" placeholder="Option 4">
+                        <input type="text" id="q${i}-correct" placeholder="Correct Answer">
+                    </div>
+                `;
+            }
+        }
+
+        function submitQuestions(quizId) {
+            let questions = [];
+            for (let i = 1; i <= 10; i++) {
+                let questionText = document.getElementById(`q${i}-text`).value;
+                let option1 = document.getElementById(`q${i}-option1`).value;
+                let option2 = document.getElementById(`q${i}-option2`).value;
+                let option3 = document.getElementById(`q${i}-option3`).value;
+                let option4 = document.getElementById(`q${i}-option4`).value;
+                let correctOption = document.getElementById(`q${i}-correct`).value;
+
+                if (!questionText || !option1 || !option2 || !option3 || !option4 || !correctOption) {
+                    alert("All fields must be filled for each question.");
+                    return;
+                }
+
+                questions.push({
+                    quiz_id: quizId,
+                    question_text: questionText,
+                    option_1: option1,
+                    option_2: option2,
+                    option_3: option3,
+                    option_4: option4,
+                    correct_option: correctOption
+                });
+            }
+
+            fetch('/api/admin/add_questions', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ questions })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    window.location.href = "/admin_dashboard"; // ✅ Redirect after successful submission
+                } else {
+                    alert("Failed to add questions. Try again.");
+                }
+            })
+            .catch(error => {
+                console.error("Error submitting questions:", error);
+                alert("An error occurred. Check the console.");
+            });
+        }
+
+        generateQuestionFields();
+    </script>
+</body>
+</html>

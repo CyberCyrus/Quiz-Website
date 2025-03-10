@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <h1 id="quiz-title">Quiz</h1>
+    </nav>
+
+    <!-- ✅ Quiz Container -->
+    <div class="container quiz-container">
+        <div id="question-container"></div>
+        <div class="nav-buttons">
+            <button id="prev-btn" onclick="prevQuestion()" style="display: none;">⬅️ Previous</button>
+            <button id="next-btn" onclick="nextQuestion()">Next ➡️</button>
+            <button id="submit-btn" onclick="submitQuiz()" style="display: none; background-color: green; color: white;">✅ Submit</button>
+        </div>
+    </div>
+
+    <script>
+        let quizId = {{ quiz_id }};  // ✅ Gets the quiz ID from URL
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let answers = {};
+
+        function fetchQuestions() {
+            fetch(`/api/questions/${quizId}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data || data.length === 0) {
+                    document.getElementById("question-container").innerHTML = `<p style="color:red;">❌ No questions found for this quiz.</p>`;
+                    return;
+                }
+                questions = data;
+                document.getElementById("quiz-title").innerText = `Quiz - ${questions.length} Questions`;
+                showQuestion();
+            })
+            .catch(error => {
+                console.error("🔥 Error fetching questions:", error);
+                alert("❌ Failed to load quiz questions. Try again later.");
+            });
+        }
+
+        // ✅ Show One Question at a Time
+        function showQuestion() {
+            let container = document.getElementById("question-container");
+            container.innerHTML = "";
+
+            if (currentQuestionIndex >= questions.length) {
+                return;
+            }
+
+            let question = questions[currentQuestionIndex];
+
+            let div = document.createElement("div");
+            div.classList.add("question-box");
+            div.innerHTML = `
+                <p class="question-text"><b>${currentQuestionIndex + 1}. ${question.question}</b></p>
+                <div class="quiz-options">
+                    <button onclick="selectOption(${question.id}, '${question.options[0]}', this)">${question.options[0]}</button>
+                    <button onclick="selectOption(${question.id}, '${question.options[1]}', this)">${question.options[1]}</button>
+                    <button onclick="selectOption(${question.id}, '${question.options[2]}', this)">${question.options[2]}</button>
+                    <button onclick="selectOption(${question.id}, '${question.options[3]}', this)">${question.options[3]}</button>
+                </div>
+            `;
+
+            container.appendChild(div);
+
+            // ✅ Show/Hide Navigation Buttons
+            document.getElementById("prev-btn").style.display = currentQuestionIndex > 0 ? "block" : "none";
+            document.getElementById("next-btn").style.display = currentQuestionIndex < questions.length - 1 ? "block" : "none";
+            document.getElementById("submit-btn").style.display = currentQuestionIndex === questions.length - 1 ? "block" : "none";
+        }
+
+        // ✅ Handle Option Selection
+        function selectOption(questionId, answer, button) {
+            answers[questionId] = answer;
+
+            let buttons = button.parentElement.getElementsByTagName("button");
+            for (let btn of buttons) {
+                btn.classList.remove("selected");
+            }
+            button.classList.add("selected");
+        }
+
+        // ✅ Navigation Functions
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        // ✅ Submit Quiz
+        function submitQuiz() {
+            fetch('/api/submit_quiz', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ quiz_id: quizId, answers: answers })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`✅ Quiz submitted! Your score: ${data.score}/10`);
+                window.location.href = "/user_scores";
+            })
+            .catch(error => {
+                console.error("Error submitting quiz:", error);
+                alert("❌ Quiz submission failed.");
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchQuestions);
+    </script>
+</body>
+</html>

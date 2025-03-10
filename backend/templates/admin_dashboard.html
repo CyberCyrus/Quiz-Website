@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Admin Panel</h1>
+    </nav>
+
+    <!-- ✅ Admin Dashboard Main Section -->
+    <div class="admin-container">
+        <!-- Create Quiz -->
+        <div class="admin-box create-quiz" onclick="toggleSection('create-quiz-section')">
+            <i class="fas fa-plus-circle"></i>
+            <h3>Create Quiz</h3>
+        </div>
+
+        <!-- Manage Quiz -->
+        <div class="admin-box manage-quiz" onclick="navigateToManageQuiz()">
+            <i class="fas fa-tasks"></i>
+            <h3>Manage Quiz</h3>
+        </div>
+
+        <!-- View All User Scores -->
+        <div class="admin-box view-scores" onclick="navigateToViewScores()">
+            <i class="fas fa-chart-line"></i>
+            <h3>View Scores</h3>
+        </div>
+    </div>
+
+    <!-- ✅ Create Quiz Section (Initially Hidden) -->
+    <div id="create-quiz-section" class="quiz-section hidden">
+        <h2>Create a New Quiz</h2>
+        <input type="text" id="quiz-title" placeholder="Enter Quiz Title">
+        <button onclick="createQuiz()">Create Quiz</button>
+    </div>
+
+    <a href="{{ url_for('logout') }}"><button class="logout-btn">Logout</button></a>
+
+    <script>
+        function toggleSection(sectionId) {
+            let section = document.getElementById(sectionId);
+            section.classList.toggle("hidden");
+        }
+
+        function createQuiz() {
+            let title = document.getElementById("quiz-title").value;
+            if (title.trim() === "") {
+                alert("Quiz title cannot be empty.");
+                return;
+            }
+
+            fetch('/api/admin/add_quiz', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    alert("Failed to create quiz.");
+                }
+            })
+            .catch(error => {
+                console.error("Error creating quiz:", error);
+                alert("An error occurred. Check console.");
+            });
+        }
+
+        function navigateToManageQuiz() {
+            window.location.href = "/admin/manage_quiz";
+        }
+
+        function navigateToViewScores() {
+            window.location.href = "/admin/view_scores";
+        }
+    </script>
+</body>
+</html>

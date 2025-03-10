@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Quizzes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Manage Quizzes</h1>
+    </nav>
+
+    <div class="container">
+        <h2>List of Quizzes</h2>
+        <ul id="quiz-list"></ul>
+
+        <a href="{{ url_for('admin_dashboard') }}"><button>Back to Dashboard</button></a>
+    </div>
+
+    <script>
+        function fetchQuizzes() {
+            fetch('/api/quizzes')
+            .then(response => response.json())
+            .then(data => {
+                let quizList = document.getElementById("quiz-list");
+                quizList.innerHTML = "";
+    
+                if (data.length === 0) {
+                    quizList.innerHTML = "<p>No quizzes found.</p>";
+                    return;
+                }
+    
+                data.forEach(quiz => {
+                    let li = document.createElement("li");
+                    li.classList.add("quiz-item");
+                    li.innerHTML = `
+                        <span class="quiz-title">${quiz.title} (ID: ${quiz.id})</span>
+                        <div class="action-buttons">
+                            <button class="delete-btn" onclick="deleteQuiz(${quiz.id})">❌ Delete</button>
+                            <button class="edit-btn" onclick="editQuiz(${quiz.id})">✏️ Edit</button>
+                        </div>
+                    `;
+                    quizList.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error("🔥 Error fetching quizzes:", error);
+                alert("Failed to load quizzes.");
+            });
+        }
+    
+        function deleteQuiz(quizId) {
+            if (!confirm("Are you sure you want to delete this quiz?")) {
+                return;
+            }
+    
+            fetch(`/api/admin/delete_quiz/${quizId}`, {
+                method: "DELETE"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message.includes("successfully")) {
+                    alert("✅ " + data.message);
+                    fetchQuizzes(); // Reload quizzes after deletion
+                } else {
+                    alert("❌ " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("🔥 Error deleting quiz:", error);
+                alert("❌ Failed to delete quiz.");
+            });
+        }
+    
+        function editQuiz(quizId) {
+            window.location.href = `/admin/add_questions/${quizId}`;
+        }
+    
+        document.addEventListener("DOMContentLoaded", fetchQuizzes);
+    </script>    
+</body>
+</html>
